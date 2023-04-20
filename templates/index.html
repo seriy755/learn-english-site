@@ -1,0 +1,53 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Изучаем английский язык вместе!
+{% endblock %}
+
+{% block page-lead %}
+Это страничка проекта про изучение английского языка. <br/>
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5" id="project-contents">
+    <h2 class="pb-2 border-bottom">Давайте начнём учиться!</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col d-flex">
+            <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Словарь</h3>
+                <p>Просмотр и редактирование изученных слов.</p>
+                <a href="/terms-list" class="btn btn-primary">Приступим!</a>
+            </div>
+        </div>
+        <div class="col d-flex">
+            <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Учебные материалы</h3>
+                <p>Просмотр и редактирование учебных материалов.</p>
+                <a href="/add-term" class="btn btn-primary">Приступим!</a>
+            </div>
+        </div>
+        <div class="col d-flex">
+            <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Карточки</h3>
+                <p>Изучение и повторение слов с помощью карточек.</p>
+                <a href="/stats" class="btn btn-primary">Приступим!</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
