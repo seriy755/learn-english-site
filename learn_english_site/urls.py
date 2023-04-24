@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from .work_cards import Card
 
 urlpatterns = [
     path('', views.index),
     path('vocabulary', views.vocabulary),
     path('send_word', views.send_word),
     path('word_add', views.word_add),
+    path('cards', views.cards),
+    path('cards/<int:cnt>', views.show_translate)
 ]

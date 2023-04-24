@@ -1,17 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.cache import cache
-from .words_work import get_words_for_table, write_word
+from .words_work import get_words, write_word
+from .work_cards import get_cards
 
+cards_list = get_cards()
 
 def index(request):
     return render(request, "index.html")
 
+
 def vocabulary(request):
-    words = get_words_for_table()
-    return render(request, "vocabulary.html", context={"data": words})
+    words_list = get_words()
+    return render(request, "vocabulary.html", context={"data": words_list})
+
 
 def word_add(request):
     return render(request, "word_add.html")
+
 
 def send_word(request):
     if request.method == "POST":
@@ -35,3 +40,15 @@ def send_word(request):
         return render(request, "word_request.html", context)
     else:
         word_add(request)
+
+
+def cards(request):
+    cards_list = get_cards()
+    return render(request, "cards.html", context={"data": cards_list})
+
+
+def show_translate(request, cnt):
+    for card in cards_list:
+        if cnt == card.cnt:
+            card.show()
+    return render(request, "cards.html", context={"data": cards_list})
