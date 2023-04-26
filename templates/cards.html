@@ -5,19 +5,34 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-        {% for card in data %}
-        <div class="col-md 8 mx-auto">
-            <div class="card border-dark mb-3 text-center" style="max-width: 20rem;">
-                <h3 class="card-header"> № {{ card.cnt }}</h3>
-                <div class="card-body">
-                    <h5 class="card-title">{{ card }}</h5>
-                    <a href="/cards/{{ card.cnt }}" class="btn btn-primary">Показать перевод</a>
-                </div>
+<!--scripts-->
+<script src="http://unpkg.com/flip-card-wc/dist/flip-card-wc.js"></script>
+
+<div class="row justify-content-center">
+    <div class="d-flex justify-content-center align-items-center">
+              <small class="text-muted">{{ cur_card }}/{{ num_cards }}</small>
+            </div>
+    <div class="col-md-8 mt-8">
+        <flip-card class="card mb-4" variant="click">
+            <div class="card__details" slot="front">
+                <h3 class="card-title">{{ front }}</h3>
+            </div>
+            <div class="card__details" slot="back">
+                <h3 class="card-title">{{ back }}</h3>
+            </div>
+        </flip-card>
+            <div class="btn-group" role="group">
+                {% if prev_card %}
+                <a href="/cards/{{ prev_card }}" type="button" class="btn btn-secondary">Предыдущая</a>
+                {% else %}
+                <a type="button" aria-disabled="true" class="btn btn-secondary disabled">Предыдущая</a>
+                {% endif %}
+                {% if next_card %}
+                <a href="/cards/{{ next_card }}" type="button" class="btn btn-primary">Следующая</a>
+                {% else %}
+                <a type="button" aria-disabled="true" class="btn btn-primary disabled">Следующая</a>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
-    </div>
 </div>
 {% endblock %}

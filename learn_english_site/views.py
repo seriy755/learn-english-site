@@ -3,7 +3,6 @@ from django.core.cache import cache
 from .words_work import get_words, write_word
 from .work_cards import get_cards
 
-cards_list = get_cards()
 
 def index(request):
     return render(request, "index.html")
@@ -42,13 +41,17 @@ def send_word(request):
         word_add(request)
 
 
-def cards(request):
+def cards(request, current=None):
     cards_list = get_cards()
-    return render(request, "cards.html", context={"data": cards_list})
-
-
-def show_translate(request, cnt):
-    for card in cards_list:
-        if cnt == card.cnt:
-            card.show()
-    return render(request, "cards.html", context={"data": cards_list})
+    num_cards = len(cards_list)
+    if current == None:
+        card = cards_list[0]  
+    else:
+        card = cards_list[current-1]
+    context = {"cur_card": card["id"],
+               "prev_card": card["id"] - 1  if card["id"] > 1 else None,
+               "next_card": card["id"] + 1 if card["id"] < num_cards else None,
+               "front": card["front"],
+               "back": card["back"],
+               "num_cards": num_cards}
+    return render(request, "cards.html", context)
