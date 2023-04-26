@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.core.cache import cache
 from .words_work import get_words, write_word
 from .work_cards import get_cards
