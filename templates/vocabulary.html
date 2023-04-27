@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <a href="/word-add" class="btn btn-primary">Добавить новое слово</a>
-</div>
 <div class="container px-4 py-5" id="vocab-table">
+    <form class="form-inline" method="get">
+        <input class="form-control form-control-sm ml 3 w-75" type="text" placeholder="Поиск по словарю" aria-label="Search" name="search" id="search">
+    </form>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -31,5 +31,8 @@
           </tbody>
         </table>
       </div>
+    <div>
+        <a href="/word-add" class="btn btn-primary">Добавить новое слово</a>
+    </div>
 </div>
 {% endblock %}

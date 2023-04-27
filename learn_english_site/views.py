@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.cache import cache
-from .works import get, write
+from .works import get, get_all, write
 
 
 VOCABULARY_CSV = "./data/vocabulary.csv"
@@ -12,12 +12,16 @@ def index(request):
 
 
 def vocabulary(request):
-    words_list = get(VOCABULARY_CSV)
+    search = request.GET.get("search")
+    if search is not None:
+        words_list = get(VOCABULARY_CSV, search)
+    else:
+        words_list = get_all(VOCABULARY_CSV)
     return render(request, "vocabulary.html", context={"data": words_list})
 
 
 def education_materials(request):
-    educate_list = get(EDUCATION_MATERIALS_CSV)
+    educate_list = get_all(EDUCATION_MATERIALS_CSV)
     return render(request, "educational_materials.html", context={"data": educate_list})
 
 
