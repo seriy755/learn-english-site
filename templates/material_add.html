@@ -1,0 +1,43 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Добавить учебный материал
+{% endblock %}
+
+{% block content %}
+<!--JavaScript-->
+<script src="https://unpkg.com/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
+<script>dselect(document.querySelector('#dselect-material'))</script>
+
+<div class="container-sm px-5 py-5" id="word-form">
+    <form method="post">
+        <div class="row px-5 py-2">
+            <h3>Описание учебного материала</h3>
+        </div>
+        <div class="row px-5 py-2">
+            <div class="col-md-3">
+                <label for="new_material">Тип учебного материала</label>
+                <select class="form-select dselect" name="dselect-material" id="dselect-material">
+                    <option value="lesson">Урок</option>
+                    <option value="literature">Литература</option>
+                    <option value="video">Видеоматериал</option>
+                    <option value="audio">Аудиоматериал</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="new_link">Ссылка</label>
+                <input type="text" class="form-control input-lg" name="new_link" id="new_link">
+            </div>
+            <div class="col-md-6">
+                <label for="new_description">Описание</label>
+                <textarea type="text" class="form-control input-lg" name="new_description" id="new_description"
+                aria-discrabedby="commention_note", rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row px-5 py-2">
+            <button type="submit" class="btn btn-primary" formaction="/send-material">Отправить</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

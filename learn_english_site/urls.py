@@ -20,8 +20,11 @@ from . import views
 urlpatterns = [
     path('', views.index),
     path('vocabulary', views.vocabulary),
-    path('send_word', views.send_word),
-    path('word_add', views.word_add),
+    path('educational-materials', views.education_materials),
     path('cards', views.cards),
+    path('word-add', views.word_add),
+    path('send-word', views.send_word),
     path('cards/<int:current>', views.cards),
+    path('material-add', views.material_add),
+    path('send-material', views.send_material),
 ]
