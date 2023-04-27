@@ -26,7 +26,7 @@ def education_materials(request):
 
 
 def cards(request, current=None):
-    cards_list = get(VOCABULARY_CSV )
+    cards_list = get_all(VOCABULARY_CSV )
     num_cards = len(cards_list)
     if current == None:
         card = cards_list[0]  
