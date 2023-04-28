@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <a href="/material-add" class="btn btn-primary">Добавить учебный материал</a>
-</div>
 <div class="container px-4 py-5" id="educate-table">
     <div class="table-responsive">
         <table class="table table-striped table-sm">
@@ -24,12 +21,15 @@
             <tr>
                 <td class="py-3">{{ cnt }}</td>
                 <td class="py-3">{{ type }}</td>
-                <td class="py-3"> <a class="link-opacity-10-hover" href="{{ link }}">Ссылка</a></td>
+                <td class="py-3"> <a class="link-opacity-10-hover" href="{{ link }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td class="py-3">{{ description }}</td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
+    <div>
+        <a href="/material-add" class="btn btn-primary">Добавить учебный материал</a>
+    </div>
 </div>
 {% endblock %}

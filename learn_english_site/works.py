@@ -29,9 +29,18 @@ def get(csv, search):
     request = f"{search}\w*"
     with open(csv , "r", encoding="utf-8") as f:
         for line in f.readlines()[1:]:
-            res = re.search(request, line)
+            en_ru = re.match("\w*;\w*;", line).group(0)
+            res = re.search(request, en_ru)
             if res is not None:
                 data_line = [cnt + 1] + line.split(";")
                 data.append(data_line)
                 cnt += 1
     return data
+
+
+def edit(csv, pk, new_line):
+    with open(csv , "r", encoding="utf-8") as f:
+        data = [l.strip("\n") for l in f.readlines()]
+        data[pk] = new_line
+    with open(csv, "w", encoding="utf-8") as f:
+        f.write("\n".join(data))

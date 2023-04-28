@@ -1,6 +1,7 @@
+import linecache
 from django.shortcuts import render
 from django.core.cache import cache
-from .works import get, get_all, write
+from .works import get, get_all, write, edit
 
 
 VOCABULARY_CSV = "./data/vocabulary.csv"
@@ -12,6 +13,15 @@ def index(request):
 
 
 def vocabulary(request):
+    if request.method == "POST":
+        pk = request.build_absolute_uri().split("=")[-1]
+        pk = int(pk)
+        word = request.POST.get("word")
+        translation = request.POST.get("translation")
+        comment = request.POST.get("comment", "").rstrip()
+        new_line = (";").join([word, translation, comment])
+        edit(VOCABULARY_CSV, pk, new_line)
+        linecache.clearcache()
     search = request.GET.get("search")
     if search is not None:
         words_list = get(VOCABULARY_CSV, search)
@@ -49,12 +59,23 @@ def material_add(request):
     return render(request, "material_add.html")
 
 
+def word_edit(request, pk):
+    line = linecache.getline(VOCABULARY_CSV, pk + 1)
+    word, translation, comment = line.split(";")
+    
+    context = {"pk": pk,
+               "word": word,
+               "translation": translation,
+               "comment": comment}
+    return render(request, "word_edit.html", context)
+
+
 def send_word(request):
     if request.method == "POST":
         cache.clear()
         new_word = request.POST.get("new_word")
         new_translation = request.POST.get("new_translation")
-        comment = request.POST.get("new_comment", "")
+        comment = request.POST.get("new_comment", "").rstrip()
         context = {}
         if len(new_word) == 0:
             context["success"] = False
