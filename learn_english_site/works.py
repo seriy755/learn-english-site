@@ -5,7 +5,7 @@ def get_all(csv):
     data = []
     with open(csv , "r", encoding="utf-8") as f:
         for cnt, line in enumerate(f.readlines()[1:]):
-            data_line = [cnt + 1] + line.split(";")
+            data_line = [cnt + 1, cnt + 1] + line.split(";")
             data.append(data_line)
     return data
 
@@ -28,11 +28,11 @@ def get(csv, search):
     cnt = 0
     request = f"{search}\w*"
     with open(csv , "r", encoding="utf-8") as f:
-        for line in f.readlines()[1:]:
+        for i, line in enumerate(f.readlines()[1:]):
             en_ru = re.match("\w*;\w*;", line).group(0)
             res = re.search(request, en_ru)
             if res is not None:
-                data_line = [cnt + 1] + line.split(";")
+                data_line = [i + 1, cnt + 1] + line.split(";")
                 data.append(data_line)
                 cnt += 1
     return data
@@ -42,5 +42,17 @@ def edit(csv, pk, new_line):
     with open(csv , "r", encoding="utf-8") as f:
         data = [l.strip("\n") for l in f.readlines()]
         data[pk] = new_line
+    title = data[0]
+    data.pop(0)
+    data.sort()
+    data = [title] + data
+    with open(csv, "w", encoding="utf-8") as f:
+        f.write("\n".join(data))
+
+
+def delete(csv, pk):
+    with open(csv , "r", encoding="utf-8") as f:
+        data = [l.strip("\n") for l in f.readlines()]
+        del data[pk]
     with open(csv, "w", encoding="utf-8") as f:
         f.write("\n".join(data))

@@ -1,7 +1,8 @@
 import linecache
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.core.cache import cache
-from .works import get, get_all, write, edit
+from .works import get, get_all, write, edit, delete
 
 
 VOCABULARY_CSV = "./data/vocabulary.csv"
@@ -55,19 +56,40 @@ def word_add(request):
     return render(request, "word_add.html")
 
 
-def material_add(request):
-    return render(request, "material_add.html")
-
-
 def word_edit(request, pk):
     line = linecache.getline(VOCABULARY_CSV, pk + 1)
     word, translation, comment = line.split(";")
-    
     context = {"pk": pk,
                "word": word,
                "translation": translation,
                "comment": comment}
     return render(request, "word_edit.html", context)
+
+
+def word_del(request, pk):
+    delete(VOCABULARY_CSV, pk)
+    next = request.GET.get("next")
+    return HttpResponseRedirect(next)
+
+
+def material_add(request):
+    return render(request, "material_add.html")
+
+
+def material_edit(request, pk):
+    line = linecache.getline(VOCABULARY_CSV, pk + 1)
+    word, translation, comment = line.split(";")
+    context = {"pk": pk,
+               "word": word,
+               "translation": translation,
+               "comment": comment}
+    return render(request, "word_edit.html", context)
+
+
+def material_del(request, pk):
+    delete(VOCABULARY_CSV, pk)
+    next = request.GET.get("next")
+    return HttpResponseRedirect(next)
 
 
 def send_word(request):

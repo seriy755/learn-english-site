@@ -24,6 +24,7 @@ urlpatterns = [
     path('cards', views.cards),
     path('word-add', views.word_add),
     path('send-word', views.send_word),
+    path('word-del/<int:pk>', views.word_del),
     path('word-edit/<int:pk>', views.word_edit),
     path('cards/<int:current>', views.cards),
     path('material-add', views.material_add),
