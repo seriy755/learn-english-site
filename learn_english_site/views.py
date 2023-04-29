@@ -25,7 +25,6 @@ def vocabulary(request):
         comment = request.POST.get("comment", "").rstrip()
         new_line = (";").join([word, translation, comment])
         edit(VOCABULARY_CSV, pk, new_line)
-        linecache.clearcache()
     search = request.GET.get("search")
     if search is not None:
         words_list = get(VOCABULARY_CSV, search)
@@ -46,7 +45,6 @@ def education_materials(request):
         description = request.POST.get("description")
         new_line = (";").join([material, link, description]).rstrip()
         edit(EDUCATION_MATERIALS_CSV, pk, new_line)
-        linecache.clearcache()
     educate_list = get_all(EDUCATION_MATERIALS_CSV)
     return render(request, "educational_materials.html", context={"data": educate_list})
 
@@ -74,6 +72,7 @@ def word_add(request):
 def word_edit(request, pk):
     line = linecache.getline(VOCABULARY_CSV, pk + 1)
     word, translation, comment = line.split(";")
+    linecache.clearcache()
     context = {"pk": pk,
                "word": word,
                "translation": translation,
@@ -94,6 +93,7 @@ def material_add(request):
 def material_edit(request, pk):
     line = linecache.getline(EDUCATION_MATERIALS_CSV, pk + 1)
     material, link, description = line.split(";")
+    linecache.clearcache()
     context = {"pk": pk,
                "material": material,
                "link": link,
