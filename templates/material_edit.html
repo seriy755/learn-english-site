@@ -1,0 +1,44 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Редактировать материал
+{% endblock %}
+
+{% block content %}
+<!--JavaScript-->
+<script src="https://unpkg.com/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
+<script>dselect(document.querySelector('#dselect-material'))</script>
+
+<div class="container-sm px-5 py-5" id="edit-form">
+    <form method="post">
+        <div class="row px-5 py-2">
+            <h3>Редактируемый материал</h3>
+        </div>
+        <div class="row px-5 py-2">
+            <div class="col-md-3">
+                <label for="material">Тип учебного материала</label>
+                <select class="form-select dselect" name="dselect-material" id="dselect-material">
+                    <option value="lesson">Урок</option>
+                    <option value="literature">Литература</option>
+                    <option value="video">Видеоматериал</option>
+                    <option value="audio">Аудиоматериал</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="new_translation">Ссылка</label>
+                <input type="text" class="form-control input-lg" value="{{ link }}" name="link" id="link">
+            </div>
+            <div class="col-md-6">
+                <label for="new_comment">Описание</label>
+                <textarea type="text" class="form-control input-lg" name="description" id="description"
+                aria-discrabedby="commention_note", rows="3">{{ description }}</textarea>
+            </div>
+        </div>
+        <div class="row px-5 py-2">
+            <input type="hidden" name="edit" value="{{ pk }}">
+            <button type="submit" class="btn btn-primary" formaction="/educational-materials">Сохранить</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

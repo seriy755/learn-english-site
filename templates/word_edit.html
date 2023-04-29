@@ -21,14 +21,15 @@
                 <input type="text" class="form-control input-lg" value="{{ translation }}" name="translation" id="translation">
             </div>
             <div class="col-md-6">
-                <label for="new_comment">Пояснение</label>
+                <label for="new_comment">Комментарий</label>
                 <textarea type="text" class="form-control input-lg" name="comment" id="comment"
                 aria-discrabedby="commention_note", rows="2">{{ comment }}</textarea>
-                <div id="commention_note" class="form-text">Вы можете добавить пояснение к переводу, если требуется</div>
+                <div id="commention_note" class="form-text">Вы можете добавить комментарий к переводу, если требуется</div>
             </div>
         </div>
         <div class="row px-5 py-2">
-            <button type="submit" class="btn btn-primary" formaction="/vocabulary?edit={{ pk }}">Сохранить</button>
+            <input type="hidden" name="edit" value="{{ pk }}">
+            <button type="submit" class="btn btn-primary" formaction="/vocabulary">Сохранить</button>
         </div>
     </form>
 </div>

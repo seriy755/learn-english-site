@@ -15,8 +15,7 @@ def index(request):
 
 def vocabulary(request):
     if request.method == "POST":
-        pk = request.build_absolute_uri().split("=")[-1]
-        pk = int(pk)
+        pk = int(request.POST.get("edit"))
         word = request.POST.get("word")
         translation = request.POST.get("translation")
         comment = request.POST.get("comment", "").rstrip()
@@ -32,12 +31,24 @@ def vocabulary(request):
 
 
 def education_materials(request):
+    if request.method == "POST":
+        pk = int(request.POST.get("edit"))
+        materials = {"lesson": "Урок",
+                     "literature": "Литература",
+                     "audio": "Аудиоматериал",
+                     "video": "Видеоматериал"}
+        material = materials[request.POST.get("dselect-material")]
+        link = request.POST.get("link")
+        description = request.POST.get("description")
+        new_line = (";").join([material, link, description]).rstrip()
+        edit(EDUCATION_MATERIALS_CSV, pk, new_line)
+        linecache.clearcache()
     educate_list = get_all(EDUCATION_MATERIALS_CSV)
     return render(request, "educational_materials.html", context={"data": educate_list})
 
 
 def cards(request, current=None):
-    cards_list = get_all(VOCABULARY_CSV )
+    cards_list = get_all(VOCABULARY_CSV)
     num_cards = len(cards_list)
     if current == None:
         card = cards_list[0]  
@@ -46,8 +57,8 @@ def cards(request, current=None):
     context = {"cur_card": card[0],
                "prev_card": card[0] - 1  if card[0] > 1 else None,
                "next_card": card[0] + 1 if card[0] < num_cards else None,
-               "front": card[1],
-               "back": card[2],
+               "front": card[2],
+               "back": card[3],
                "num_cards": num_cards}
     return render(request, "cards.html", context)
 
@@ -77,17 +88,17 @@ def material_add(request):
 
 
 def material_edit(request, pk):
-    line = linecache.getline(VOCABULARY_CSV, pk + 1)
-    word, translation, comment = line.split(";")
+    line = linecache.getline(EDUCATION_MATERIALS_CSV, pk + 1)
+    material, link, description = line.split(";")
     context = {"pk": pk,
-               "word": word,
-               "translation": translation,
-               "comment": comment}
-    return render(request, "word_edit.html", context)
+               "material": material,
+               "link": link,
+               "description": description}
+    return render(request, "material_edit.html", context)
 
 
 def material_del(request, pk):
-    delete(VOCABULARY_CSV, pk)
+    delete(EDUCATION_MATERIALS_CSV, pk)
     next = request.GET.get("next")
     return HttpResponseRedirect(next)
 
@@ -123,7 +134,7 @@ def send_material(request):
                      "video": "Видеоматериал"}
         new_material = materials[request.POST.get("dselect-material")]
         new_link = request.POST.get("new_link")
-        new_description = request.POST.get("new_description")
+        new_description = request.POST.get("new_description").rstrip()
         context = {}
         if len(new_link) == 0:
             context["success"] = False
