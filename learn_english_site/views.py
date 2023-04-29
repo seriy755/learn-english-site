@@ -13,6 +13,10 @@ def index(request):
     return render(request, "index.html")
 
 
+def about(request):
+    return render(request, "about.html")
+
+
 def vocabulary(request):
     if request.method == "POST":
         pk = int(request.POST.get("edit"))
